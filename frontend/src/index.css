@@ -1,5 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Poppins:wght@300;400;500&display=swap');
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+
+:root{
+    --shadow-color : rgb(219, 244, 252);
+}
+
+
+/* font-family: 'Montserrat', sans-serif;
+font-family: 'Poppins', sans-serif; */
+
+
+/* NAVBAR CSS */
+
+.navbar{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    line-height: 26px;
+    box-shadow: 0 8px 6px -6px var(--shadow-color);
+    border-bottom: 0.3px solid var(--shadow-color) !important;
+}
+
+.active{
+    border-bottom: 2px solid black;
+}
+
+.navbar-brand{
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 3px;
 }

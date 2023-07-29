@@ -1,29 +1,14 @@
-import React, { useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import Layout from "../components/Layout/Layout";
+import { useAuth } from "../context/auth";
 
 const HomePage = () => {
-  // Login user data
-  const getUserData = async () => {
-    try {
-      const res = await axios.post(
-        "/api/v1/auth/getUserData",
-        {},
-        {
-          headers: { Authorization: "Bearer" + localStorage.getItem("token") },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [auth, setAuth] = useAuth();
 
-  useEffect(() => {
-    getUserData();
-  }, []);
   return (
-    <Layout>
+    <Layout title={"MernApp | Home"}>
       <h1>Home Page</h1>
+      <pre>{JSON.stringify(auth, null, 4)}</pre>
     </Layout>
   );
 };

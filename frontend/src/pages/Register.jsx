@@ -24,7 +24,7 @@ const Register = () => {
   };
 
   return (
-    <Layout>
+    <Layout title={"MernApp | Register"}>
       <div className="form-container">
         <Form
           layout="vertical"

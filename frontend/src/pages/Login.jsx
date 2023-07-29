@@ -1,20 +1,29 @@
 import React from "react";
 import { Form, Input, message } from "antd";
 import "../styles/LoginStyles.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Layout from "../components/Layout/Layout";
+import { useAuth } from "../context/auth";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [auth, setAuth] = useAuth();
 
+  const location = useLocation();
   const onfinishHandler = async (values) => {
     try {
       const res = await axios.post("/api/v1/auth/login", values);
       if (res.data.success) {
-        localStorage.setItem("token", res.data.token);
+        // localStorage.setItem("token", res.data.token);
         message.success("Login Successfully");
-        navigate("/");
+        setAuth({
+          ...auth,
+          user: res.data.user,
+          token: res.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(res.data));
+        navigate(location.state || "/");
       } else {
         message.error(res.data.message);
       }
@@ -24,7 +33,7 @@ const Login = () => {
     }
   };
   return (
-    <Layout>
+    <Layout title={"MernApp | Login"}>
       <div className="form-container">
         <Form
           layout="vertical"

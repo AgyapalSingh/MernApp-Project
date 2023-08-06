@@ -1,19 +1,20 @@
 import React from "react";
+import Layout from "../components/Layout/Layout";
+
 import { Form, Input, message } from "antd";
 import "../styles/LoginStyles.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import Layout from "../components/Layout/Layout";
 import { useAuth } from "../context/auth";
 
-const Login = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
 
   const location = useLocation();
   const onfinishHandler = async (values) => {
     try {
-      const res = await axios.post("/api/v1/auth/login", values);
+      const res = await axios.post("/api/v1/auth/forgot-password", values);
       if (res.data.success) {
         // localStorage.setItem("token", res.data.token);
         message.success("Login Successfully");
@@ -33,34 +34,32 @@ const Login = () => {
     }
   };
   return (
-    <Layout title={"MernApp | Login"}>
+    <Layout title={"MernApp | Forgot Password"}>
       <div className="form-container">
         <Form
           layout="vertical"
           onFinish={onfinishHandler}
           className="register-form"
         >
-          <h1 className="text-center">Login Form</h1>
+          <h1 className="text-center">Reset Paaword</h1>
 
           <Form.Item label="Email" name="email">
             <Input type="email" required />
           </Form.Item>
 
-          <Form.Item label="Password" name="password">
+          <Form.Item label="Answer" name="answer">
+            <Input type="text" required />
+          </Form.Item>
+
+          <Form.Item label="New Password" name="newPassword">
             <Input type="password" required />
           </Form.Item>
 
-          <Link to="/register" className="m-2">
-            Not a user ? Register here
-          </Link>
           <button className="btn btn-primary">Login</button>
         </Form>
-        <Link to="/forgot-password" className="m-2">
-          Forgot Password ?
-        </Link>
       </div>
     </Layout>
   );
 };
 
-export default Login;
+export default ForgotPassword;

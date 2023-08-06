@@ -7,7 +7,7 @@ import JWT from 'jsonwebtoken';
 
 export const registerController = async(req, res) =>{
     try {
-        const {firstName, lastName, email, password, phoneNumber, address} = req.body
+        const {firstName, lastName, email, password, phoneNumber, address, answer} = req.body
 
         // validations
         if(!firstName){
@@ -28,6 +28,9 @@ export const registerController = async(req, res) =>{
         if(!address){
             return res.send({error: 'Address is Required'})
         }
+        if(!answer){
+            return res.send({error: 'Answer is Required'})
+        }
 
 
         // Check User
@@ -46,7 +49,7 @@ export const registerController = async(req, res) =>{
         const hashedPassword = await hashPassword(password);
 
         // save
-        const user = await new userModel({firstName, lastName, email, phoneNumber, address, password:hashedPassword}).save()
+        const user = await new userModel({firstName, lastName, email, phoneNumber, address, password:hashedPassword, answer}).save()
 
         res.status(201).send({
             success: true,
@@ -121,6 +124,51 @@ export const loginController = async (req, res) => {
     }
 };
 
+
+// 3. ForgotPasswordController
+export const forgotPasswordController = async(req, res) =>{
+    try {
+        const {email, answer, newPassword } = req.body
+
+        // validation
+        if(!email){
+            res.status(400).send({message: 'Email is required'})
+        }
+        if(!answer){
+            res.status(400).send({message: 'Answer is required'})
+        }
+        if(!newPassword){
+            res.status(400).send({message: 'New Password is required'})
+        }
+
+        // check
+        const user = await userModel.findOne({email, answer})
+
+        // validation
+        if(!user){
+            return res.status(404).send({
+                success: false,
+                message: 'Wrong Email or Answer'
+            })
+        }
+
+        const hashed = hashPassword(newPassword)
+        await userModel.findByIdAndUpdate(user._id, {password: hashed})
+        res.status(200).send({
+            success: true,
+            message: "Password Reset Successfully"
+        });
+
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: 'Something went wrong',
+            error
+        })
+    }
+}
 
 // Test Controller
 export const testController = (req, res) =>{

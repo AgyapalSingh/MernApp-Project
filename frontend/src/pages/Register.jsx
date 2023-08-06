@@ -56,6 +56,10 @@ const Register = () => {
             <Input type="text" required />
           </Form.Item>
 
+          <Form.Item label="What is Your Favorite sport" name="answer">
+            <Input type="text" required />
+          </Form.Item>
+
           <Link to="/login" className="m-2">
             Already user ? Login here
           </Link>

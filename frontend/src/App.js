@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/AdminDashboard/Dashboard';
 import PrivateRoute from './components/Routes/Private';
+import ForgotPassword from './pages/ForgotPassword';
+import Categories from './pages/Categories';
 
 function App() {
   return (
@@ -17,8 +19,13 @@ function App() {
             
           <Route path='' element={<Dashboard/>} />
           </Route>
+
+          
           <Route path='/login' element={<Login/>} />
           <Route path='/register' element={<Register/>} />
+          <Route path='/forgot-password' element={<ForgotPassword/>} />
+
+          <Route path='/categories' element={<Categories/>} />
         </Routes>
      
     </>
